@@ -1,0 +1,16 @@
+package com.minegusta.MGMiniGame.handlers;
+
+public class Game {
+	
+	private static boolean canStart = false;
+	
+	
+	public static void setCanStart(boolean b)
+	{
+		boolean canStart = b;
+	}
+
+	public static boolean canStart() {
+		return canStart();
+	}
+}
