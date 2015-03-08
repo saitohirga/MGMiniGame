@@ -1,0 +1,24 @@
+package com.minegusta.MGMiniGame.listeners.player;
+
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+import com.minegusta.MGMiniGame.GameState;
+import com.minegusta.MGMiniGame.MGMiniGame;
+import com.minegusta.MGMiniGame.handlers.Game;
+import com.minegusta.MGMiniGame.listeners.MGListener;
+
+public class PlayerQuit extends MGListener{
+	
+	public PlayerQuit(MGMiniGame pl) {
+		super(pl);
+	}
+
+	@EventHandler
+	public void onPQ(PlayerQuitEvent event)
+	{
+		if(GameState.isState(GameState.IN_LOBBY))
+			Game.setCanStart(Bukkit.getOnlinePlayers().length - 1 >= 8);
+	}
+}
