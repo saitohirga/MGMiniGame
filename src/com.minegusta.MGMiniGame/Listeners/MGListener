@@ -1,0 +1,17 @@
+package com.minegusta.MGMiniGame.listeners;
+
+import org.bukkit.event.Listener;
+
+import com.minegusta.MGMiniGame.MGMiniGame;
+
+public class MGListener implements Listener
+{
+	
+	MGMiniGame plugin;
+	
+	public MGListener(MGMiniGame pl)
+	{
+		plugin = pl;
+	}
+
+}
