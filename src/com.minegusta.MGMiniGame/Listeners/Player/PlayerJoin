@@ -1,0 +1,23 @@
+package com.minegusta.MGMiniGame.listeners.player;
+
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+import com.minegusta.MGMiniGame.MGMiniGame;
+import com.minegusta.MGMiniGame.handlers.Game;
+import com.minegusta.MGMiniGame.listeners.MGListener;
+
+public class PlayerJoin extends MGListener{
+
+	public PlayerJoin(MGMiniGame pl) 
+	{
+		super(pl);
+	}
+	
+	@EventHandler
+	public void onPJ(PlayerJoinEvent event)
+	{
+		Game.setCanStart(Bukkit.getOnlinePlayers().length >= 16);
+	}
+}
