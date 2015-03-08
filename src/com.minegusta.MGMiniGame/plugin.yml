@@ -1,0 +1,6 @@
+name: MGMiniGame
+version: 1
+main: com.minegusta.MGMiniGame.MGMiniGame
+author: NoneVale_, Janice, HmmmQuestionMark
+commands:
+permissions:
