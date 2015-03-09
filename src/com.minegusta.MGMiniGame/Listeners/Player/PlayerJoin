@@ -22,4 +22,5 @@ public class PlayerJoin extends MGListener{
 		Game.setCanStart(Bukkit.getOnlinePlayers().length >= 16);
 		LocationUtils.teleportToSpawn(event.getPlayer());
 	}
+	
 }
