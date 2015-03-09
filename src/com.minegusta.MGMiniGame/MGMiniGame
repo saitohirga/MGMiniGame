@@ -3,6 +3,9 @@ package com.minegusta.MGMiniGame;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.minegusta.MGMiniGame.listeners.player.ASyncPlayerPreLogin;
+import com.minegusta.MGMiniGame.listeners.player.PlayerJoin;
+import com.minegusta.MGMiniGame.listeners.player.PlayerQuit;
 import com.minegusta.MGMiniGame.threads.StartCountdown;
 
 public class MGMiniGame extends JavaPlugin
@@ -13,13 +16,8 @@ public class MGMiniGame extends JavaPlugin
 		GameState.setState(GameState.IN_LOBBY);
 		new Thread(new StartCountdown()).start();
 	}
-
-	public static void start()
-	{
-		
-	}
 	
-	public static void stop()
+	public void onDisable()
 	{
 		
 	}
@@ -28,5 +26,7 @@ public class MGMiniGame extends JavaPlugin
 	{
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoin(this), this);
+		pm.registerEvents(new PlayerQuit(this), this);
+		pm.registerEvents(new ASyncPlayerPreLogin(this), this);
 	}	
 }
