@@ -1,0 +1,26 @@
+package com.minegusta.MGMiniGame.listeners.player;
+
+import net.md_5.bungee.api.ChatColor;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
+
+import com.minegusta.MGMiniGame.MGMiniGame;
+import com.minegusta.MGMiniGame.handlers.Game;
+import com.minegusta.MGMiniGame.listeners.MGListener;
+
+public class ASyncPlayerPreLogin extends MGListener{
+
+	public ASyncPlayerPreLogin(MGMiniGame pl) {
+		super(pl);
+	}
+	
+	@EventHandler
+	public void onPPL(AsyncPlayerPreLoginEvent e)
+	{
+		if(Game.hasStarted())
+			e.disallow(Result.KICK_OTHER, ChatColor.DARK_RED + "Game Has Started!!!");
+	}
+
+}
