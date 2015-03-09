@@ -19,7 +19,7 @@ public class PlayerJoin extends MGListener{
 	@EventHandler
 	public void onPJ(PlayerJoinEvent event)
 	{
-		Game.setCanStart(Bukkit.getOnlinePlayers().length >= 16);
+		Game.setCanStart(Bukkit.getOnlinePlayers().size() >= 16);
 		LocationUtils.teleportToSpawn(event.getPlayer());
 	}
 	
