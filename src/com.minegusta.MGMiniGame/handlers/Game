@@ -1,16 +1,51 @@
 package com.minegusta.MGMiniGame.handlers;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+import com.minegusta.MGMiniGame.utils.LocationUtils;
+
 public class Game {
 	
 	private static boolean canStart = false;
+	private static boolean hasStarted = false;
 	
+	public static void stop()
+	{
+		hasStarted = false;
+	}
 	
 	public static void setCanStart(boolean b)
 	{
-		boolean canStart = b;
+		canStart = b;
 	}
 
 	public static boolean canStart() {
 		return canStart();
+	}
+
+	public static void start() {
+		hasStarted = true;
+		new Team("Red", new Location(Bukkit.getWorld("TDM"), 15.5, 64, 20.5));
+		new Team("Blue", new Location(Bukkit.getWorld("TDM"), 75.5, 64, 40.5));
+		new Team("Green", new Location(Bukkit.getWorld("TDM"), 135.5, 64, 60.5));
+		new Team("Orange", new Location(Bukkit.getWorld("TDM"), 195.5, 64, 80.5));
+		
+		int i = 0;
+		for (Player player : Bukkit.getOnlinePlayers())
+		{
+			if(i >= Team.getAllTeams().size())
+				i = 0;
+			Team.getTeam(Team.getAllTeams().get(i++).getName()).add(player);
+			LocationUtils.teleportToGame(player, Team.getAllTeams().get(i));
+			i++;
+		}
+			
+	}
+	
+	public static boolean hasStarted()
+	{
+		return hasStarted;
 	}
 }
