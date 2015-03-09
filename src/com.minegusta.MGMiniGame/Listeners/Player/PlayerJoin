@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import com.minegusta.MGMiniGame.MGMiniGame;
 import com.minegusta.MGMiniGame.handlers.Game;
 import com.minegusta.MGMiniGame.listeners.MGListener;
+import com.minegusta.MGMiniGame.utils.LocationUtils;
 
 public class PlayerJoin extends MGListener{
 
@@ -19,5 +20,6 @@ public class PlayerJoin extends MGListener{
 	public void onPJ(PlayerJoinEvent event)
 	{
 		Game.setCanStart(Bukkit.getOnlinePlayers().length >= 16);
+		LocationUtils.teleportToSpawn(event.getPlayer());
 	}
 }
