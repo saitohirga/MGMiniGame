@@ -1,12 +1,14 @@
 package com.minegusta.MGMiniGame.listeners.player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.minegusta.MGMiniGame.GameState;
 import com.minegusta.MGMiniGame.MGMiniGame;
 import com.minegusta.MGMiniGame.handlers.Game;
+import com.minegusta.MGMiniGame.handlers.Team;
 import com.minegusta.MGMiniGame.listeners.MGListener;
 
 public class PlayerQuit extends MGListener{
@@ -20,5 +22,10 @@ public class PlayerQuit extends MGListener{
 	{
 		if(GameState.isState(GameState.IN_LOBBY))
 			Game.setCanStart(Bukkit.getOnlinePlayers().size() - 1 >= 8);
+		
+		Player player = event.getPlayer();
+		
+		if(Game.hasStarted())
+			Team.getTeam(player).remove(player);
 	}
 }
