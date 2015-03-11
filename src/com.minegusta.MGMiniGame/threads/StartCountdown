@@ -1,65 +1,41 @@
 package com.minegusta.MGMiniGame.threads;
 
-import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import com.minegusta.MGMiniGame.GameState;
 import com.minegusta.MGMiniGame.MGMiniGame;
 import com.minegusta.MGMiniGame.handlers.Game;
 import com.minegusta.MGMiniGame.utils.ChatUtils;
 
-public class StartCountdown implements Runnable
+public class StartCountdown extends BukkitRunnable
 {
 	
-	private static int timeUntilStart;
+	MGMiniGame plugin;
+	
+	public StartCountdown(MGMiniGame pl)
+	{
+		plugin = pl;
+	}
+	
+	public static int timeUntilStart;
 
 	@Override
 	public void run() 
 	{
-		timeUntilStart = 60;
-		while (true)
+		if(timeUntilStart == 0)
 		{
-			if(GameState.isState(GameState.IN_LOBBY))
-			if (Game.canStart1())
+			if(!Game.canStart())
 			{
-				timeUntilStart = 60;
-				ChatUtils.broadcast("Minimum players reached! Countdown starting!");
-				for(;timeUntilStart >= 0; timeUntilStart--)
-				{
-					if(!Game.canStart1())
-					{
-						ChatUtils.broadcast("Not enough players needed to start! Countdown Stopped!");
-						break;
-					}
-					if(timeUntilStart == 0)
-					{
-						MGMiniGame.start();
-						break;
-					}
-				
-					if(timeUntilStart % 10 == 0 || timeUntilStart<10)
-					{
-						ChatUtils.broadcast(timeUntilStart + " Seconds until the game starts!");
-					}
-				
-					try
-					{
-						Thread.sleep(1000);
-					}catch(InterruptedException e)
-					{
-						e.printStackTrace();
-						Bukkit.shutdown();
-					}			
-				}
+				plugin.restartCountdown();
+				return;
 			}
-			try
-			{
-				Thread.sleep(1000);
-			}catch(InterruptedException e)
-			{
-				e.printStackTrace();
-				Bukkit.shutdown();
-			}
+			Game.start();
 		}
-	}
-	
+			
+		if(timeUntilStart % 10 == 0 || timeUntilStart<10)
+		{
+			ChatUtils.broadcast(String.valueOf(timeUntilStart) + " Seconds until the game starts!");		
+		}
+		
+		timeUntilStart -= 1;
+	}	
 }
