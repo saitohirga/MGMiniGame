@@ -1,9 +1,11 @@
 package com.minegusta.MGMiniGame;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.minegusta.MGMiniGame.listeners.player.ASyncPlayerPreLogin;
+import com.minegusta.MGMiniGame.listeners.player.PlayerDeath;
 import com.minegusta.MGMiniGame.listeners.player.PlayerJoin;
 import com.minegusta.MGMiniGame.listeners.player.PlayerQuit;
 import com.minegusta.MGMiniGame.threads.StartCountdown;
@@ -11,10 +13,12 @@ import com.minegusta.MGMiniGame.threads.StartCountdown;
 public class MGMiniGame extends JavaPlugin
 {
 	
+	public static int startCountdownID;
+	
 	public void onEnable()
 	{
 		GameState.setState(GameState.IN_LOBBY);
-		new Thread(new StartCountdown()).start();
+		startCountdown();
 	}
 	
 	public void onDisable()
@@ -28,5 +32,23 @@ public class MGMiniGame extends JavaPlugin
 		pm.registerEvents(new PlayerJoin(this), this);
 		pm.registerEvents(new PlayerQuit(this), this);
 		pm.registerEvents(new ASyncPlayerPreLogin(this), this);
+		pm.registerEvents(new PlayerDeath(this), this);
 	}	
+	
+	public void startCountdown()
+	{
+		StartCountdown.timeUntilStart = 60;
+		startCountdownID = getServer().getScheduler().scheduleSyncRepeatingTask(this, new StartCountdown(this), 20l, 20l);
+	}
+	
+	public void stopCountdown()
+	{
+		Bukkit.getScheduler().cancelTask(startCountdownID);
+	}
+	
+	public void restartCountdown()
+	{
+		stopCountdown();
+		startCountdown();
+	}
 }
