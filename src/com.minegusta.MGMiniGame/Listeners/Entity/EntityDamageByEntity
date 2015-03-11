@@ -1,0 +1,41 @@
+package com.minegusta.MGMiniGame.listeners.entity;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+
+import com.minegusta.MGMiniGame.MGMiniGame;
+import com.minegusta.MGMiniGame.handlers.Game;
+import com.minegusta.MGMiniGame.handlers.Team;
+import com.minegusta.MGMiniGame.listeners.MGListener;
+
+public class EntityDamageByEntity extends MGListener {
+
+	public EntityDamageByEntity(MGMiniGame pl) {
+		super(pl);
+	}
+	
+	@EventHandler
+	public void onEDBE(EntityDamageByEntityEvent e)
+	{
+		if(!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
+		{
+			e.setCancelled(true);
+			return;
+		}
+		if(!Game.hasStarted())
+		{
+			e.setCancelled(true);
+			return;
+		}
+		Player p = (Player) e.getEntity();
+		Player d = (Player) e.getDamager();
+		
+		if(Team.getTeam(p) == Team.getTeam(d))
+		{
+			e.setCancelled(true);
+			return;
+		}
+	}
+
+}
