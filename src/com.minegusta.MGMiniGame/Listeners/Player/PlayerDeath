@@ -1,0 +1,28 @@
+package com.minegusta.MGMiniGame.listeners.player;
+
+import net.md_5.bungee.api.ChatColor;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
+
+import com.minegusta.MGMiniGame.MGMiniGame;
+import com.minegusta.MGMiniGame.handlers.Team;
+import com.minegusta.MGMiniGame.listeners.MGListener;
+
+public class PlayerDeath extends MGListener {
+
+	public PlayerDeath(MGMiniGame pl) {
+		super(pl);
+	}
+	
+	@EventHandler
+	public void onPDE(PlayerDeathEvent e)
+	{
+		Player player = e.getEntity();
+		Team.getTeam(player).remove(player);
+		
+		player.kickPlayer(ChatColor.RED + "You Have Been Kicked From The Game Because You Died!!");
+	}
+
+}
