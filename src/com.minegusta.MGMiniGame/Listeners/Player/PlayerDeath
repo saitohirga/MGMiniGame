@@ -15,7 +15,7 @@ public class PlayerDeath extends MGListener {
 	public PlayerDeath(MGMiniGame pl) {
 		super(pl);
 	}
-	
+	 
 	@EventHandler
 	public void onPDE(PlayerDeathEvent e)
 	{
